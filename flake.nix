@@ -3,7 +3,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
     # NOTE: matches nixpkgs-unstable from sources.nix
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/e14f9fb57315f0d4abde222364f19f88c77d2b79";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -31,7 +31,7 @@
         all-cabal-hashes = with all-cabal; builtins.fetchurl {
           inherit sha256;
           url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
-          name = "all-cabal-hashes-${rev}.tar.gz";
+          name = "${repo}-${rev}.tar.gz";
         };
         withHadrianDeps = true;
         withIde = true;
@@ -39,10 +39,6 @@
         nixpkgs-unstable = unstablePkgsFor system;
       };
     });
-    formatter = perSystem (system:
-      let
-        pkgs = pkgsFor system;
-      in
-      pkgs.nixpkgs-fmt);
+    formatter = perSystem (system: (pkgsFor system).nixpkgs-fmt);
   };
 }
