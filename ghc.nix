@@ -81,7 +81,7 @@ let
     ++ optional withNuma numactl
     ++ optional withDwarf elfutils
     ++ optional withGhcid ghcid
-    ++ optional withIde (nixpkgs-unstable.haskell-language-server.override { supportedGhcVersions = [ (builtins.replaceStrings [ "." ] [ "" ] ghc.version) ]; })
+    ++ optional withIde (nixpkgs.haskell-language-server.override { supportedGhcVersions = [ (builtins.replaceStrings [ "." ] [ "" ] ghc.version) ]; })
     ++ optional withIde nixpkgs-unstable.clang-tools # N.B. clang-tools for clangd
     ++ optional withDtrace linuxPackages.systemtap
     ++ (if (! stdenv.isDarwin)
