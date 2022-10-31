@@ -2,7 +2,6 @@
   description = "ghc.nix flake";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
-    # NOTE: matches nixpkgs-unstable from sources.nix
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-compat = {
       url = "github:edolstra/flake-compat";
