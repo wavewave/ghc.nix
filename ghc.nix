@@ -103,7 +103,11 @@ let
     then noTest (hspkgs.callHackage "alex" "3.2.6" { })
     else noTest (hspkgs.callHackage "alex" "3.2.5" { });
 
-  depsTools = [ happy alex hspkgs.cabal-install ];
+  # A convenient shortcut
+  configureGhc = writeShellScriptBin "configure_ghc" "./configure $CONFIGURE_ARGS $@";
+  validateGhc = writeShellScriptBin "validate_ghc" "config_args='$CONFIGURE_ARGS' ./validate $@";
+
+  depsTools = [ happy alex hspkgs.cabal-install configureGhc validateGhc ];
 
   hadrianCabalExists = builtins.pathExists hadrianCabal;
   hsdrv =
@@ -170,11 +174,6 @@ in
     unset LD
 
     ${lib.optionalString withDocs "export FONTCONFIG_FILE=${fonts}"}
-
-    # A convenient shortcut
-    configure_ghc() { ./configure $CONFIGURE_ARGS $@; }
-
-    validate_ghc() { config_args="$CONFIGURE_ARGS" ./validate $@; }
 
     >&2 echo "Recommended ./configure arguments (found in \$CONFIGURE_ARGS:"
     >&2 echo "or use the configure_ghc command):"
