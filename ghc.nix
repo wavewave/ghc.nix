@@ -20,7 +20,7 @@
 , withDwarf ? nixpkgs.stdenv.isLinux  # enable libdw unwinding support
 , withNuma ? nixpkgs.stdenv.isLinux
 , withDtrace ? nixpkgs.stdenv.isLinux
-, withGrind ? true
+, withGrind ? if nixpkgs.stdenv.isDarwin then false else true
 , withEMSDK ? false                    # load emscripten for js-backend
 }:
 
