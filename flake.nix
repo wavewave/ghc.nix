@@ -20,7 +20,7 @@
       owner = "commercialhaskell";
       repo = "all-cabal-hashes";
       rev = "f4b3c68d6b5b128503bc1139cfc66e0537bccedd";
-      sha256 = "1x341yzi40xr6dxx2dvah4g943daih1y6dm4jh1d5w9fjff9v5s7";
+      sha256 = "0h8si8z462a21liw847g576yhpp0zn1m1an8gwscxb9sg4b0wqg4";
     };
   in
   {
