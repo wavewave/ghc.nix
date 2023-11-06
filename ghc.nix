@@ -14,7 +14,7 @@ in
 { system ? builtins.currentSystem
 , nixpkgs
 , all-cabal-hashes
-, bootghc ? "ghc927"
+, bootghc ? "ghc945" #"ghc927" #"ghc945" #"ghc927"
 , version ? "9.3"
 , hadrianCabal ? hadrianPath
 , useClang ? false  # use Clang for C compilation
@@ -109,6 +109,8 @@ let
       zlib.out
       zlib.dev
       hlint
+
+      libffi.dev
     ]
     ++ docsPackages
     ++ optional withLlvm llvmForGhc
@@ -229,6 +231,7 @@ hspkgs.shellFor rec {
   shellHook = ''
     # somehow, CC gets overridden so we set it again here.
     export CC=${stdenv.cc}/bin/cc
+    export CXX=${stdenv.cc}/bin/c++
     export GHC=$NIX_GHC
     export GHCPKG=$NIX_GHCPKG
     export HAPPY=${happy}/bin/happy
@@ -248,6 +251,7 @@ hspkgs.shellFor rec {
     # "nix-shell --pure" resets LANG to POSIX, this breaks "make TAGS".
     export LANG="en_US.UTF-8"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${lib.makeLibraryPath depsSystem}"
+    #export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:${lib.makeLibraryPath depsSystem}"    
     unset LD
 
     ${lib.optionalString withDocs "export FONTCONFIG_FILE=${fonts}"}
